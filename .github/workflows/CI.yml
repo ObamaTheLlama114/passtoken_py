@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: textbook/git-checkout-submodule-action@master
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
       with:
         manylinux: auto
@@ -29,7 +30,8 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: textbook/git-checkout-submodule-action@master
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
       with:
         command: build
@@ -44,7 +46,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: textbook/git-checkout-submodule-action@master
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
       with:
         command: build
