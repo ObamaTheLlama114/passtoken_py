@@ -8,19 +8,16 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
 jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - name: start
-      run: echo $DATABASE_URL && export DATABASE_URL=$DATABASE_URL
     - uses: actions/checkout@v3
     - name: Checkout submodules
       run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       with:
         manylinux: auto
         command: build
@@ -38,6 +35,8 @@ jobs:
     - name: Checkout submodules
       run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       with:
         command: build
         args: --release -o dist --find-interpreter
@@ -54,6 +53,8 @@ jobs:
     - name: Checkout submodules
       run: git submodule update --init --recursive
     - uses: PyO3/maturin-action@v1
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       with:
         command: build
         args: --release -o dist --universal2 --find-interpreter
